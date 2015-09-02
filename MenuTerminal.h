@@ -35,11 +35,11 @@ using namespace std;
 				cout <<"\t\t\t"<< "Nombre y Apellidos: " << c.getNombre() << " " << c.getApellidos() <<" DNI: "<< c.getDni() << endl;
 				cout <<"\t\t\t"<< "Fecha Nacimiento: " << c.getFechanacimiento() << endl;
 				cout <<"\t\t\t"<< "Telefono: " << c.getTelefono() << endl;
-
+				cout <<endl<<"\t\t\t" <<"Citas: " << endl;
 				list <citas> ld =c.getCitas();
-
+				
 				for(i=ld.begin() ; i!=ld.end() ; i++){
-
+					
 					if(i->fecha!=""){
 
 						cout <<"\t\t\t"<<"Fecha: "<< i->fecha <<" Hora "<< i->hora <<" Motivo "<< i->motivo <<endl;
@@ -57,7 +57,6 @@ using namespace std;
 				
 				Contacto_it i;
 				
-
 				cout << "\t\t\t---------------------------------------------------------------------------------\n";
 				cout <<"\t\t\t"<<"*******************************AGENDA DE CONTACTOS*******************************";
 				cout << "\n\t\t\t---------------------------------------------------------------------------------\n\n";
@@ -99,7 +98,7 @@ using namespace std;
 
 				for(i=auxiliar.begin();i!=auxiliar.end();i++){
 
-					this->visualizarContacto(i);//Imprimir contacto a contacto
+					this->visualizarContacto(i); //Imprimir contacto a contacto
 				}
 			}
 
@@ -112,7 +111,6 @@ using namespace std;
 				citas CitasAuxiliar;
 				list <citas> CitasAux;
 				
-
 				salto();
 
 				cout <<"\t\t\t"<< "¿Cuantas citas vas a guardar de este contacto? (Máximo 5)" << endl<<"\t\t\t";
@@ -123,7 +121,7 @@ using namespace std;
 
 				//es un problema que atoi devuelva 0 si meto una letra, porque si meto 0 por teclado
 				//no puedo diferenciar esos dos casos
-				if((Citas>5) || (Citas<0)){ //Si he metido un numero de direcciones que no se puede meter, direcciones=0
+				if((Citas>5) || (Citas<0)){ 
 				
 					Citas=0;
 				}
@@ -139,28 +137,30 @@ using namespace std;
 				c.setNombre(nombre);
 
 				cout <<"\t\t\t"<< "Introduce los apellidos del contacto: " << endl<<"\t\t\t";
-				getline(cin,fechanacimiento);
-				c.setFechanacimiento(fechanacimiento);
+				getline(cin,apellidos);
+				c.setApellidos(apellidos);
 
 				cout <<"\t\t\t"<< "Introduce la fecha de nacimiento del contacto: " << endl<<"\t\t\t";
-				getline(cin,telefono);
-				c.setTelefono(telefono);
-
+				getline(cin,fechanacimiento);
+				c.setFechanacimiento(fechanacimiento);
+				
 				cout <<"\t\t\t"<< "Introduce el telefono del contacto: " << endl<<"\t\t\t";
 				getline(cin,telefono);
 				c.setTelefono(telefono);
-
-
+				
 				for(i=0 ; i<Citas ; i++){
 
 					cout <<"\t\t\t"<< "Fecha: " << endl<<"\t\t\t";
 					getline(cin, CitasAuxiliar.fecha);
+					
 
 					cout <<"\t\t\t"<< "Hora: " << endl<<"\t\t\t";
 					getline(cin, CitasAuxiliar.hora);
 
 					cout <<"\t\t\t"<< "Motivo: " << endl<<"\t\t\t";
 					getline(cin, CitasAuxiliar.motivo);
+
+				//probar si rellena bien	cout <<"\t\t\t"<<"Fecha: "<< CitasAuxiliar.fecha <<" Hora "<< CitasAuxiliar.hora <<" Motivo "<< CitasAuxiliar.motivo <<endl;
 
 					CitasAux.push_back(CitasAuxiliar);
 
@@ -175,7 +175,7 @@ using namespace std;
 					CitasAux.push_back(CitasAuxiliar);
 				}
 				c.setCitas(CitasAux);
-	
+
 			}
 
 			void insertarContacto(){
