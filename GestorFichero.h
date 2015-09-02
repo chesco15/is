@@ -21,32 +21,17 @@ using namespace std;
 
 		public:
 
+			GestorFichero(string nomFich) : _fichero(nomFich){}; //constructor que le pasamos un fichero
 
-			string minuscula(string cadena){
-				locale loc;
-				string str=cadena;
-				for (string::size_type i=0; i<str.length(); ++i)
-	 			 	str[i] = tolower(str[i],loc);
-				return str;
-			}
-
-
-			bool funcion_compara_apellidos(const Contacto &c1, const Contacto &c2) {
-				return minuscula(c1.getApellidos()) < minuscula(c2.getApellidos());
-			}
-
-
-			string getFichero()const{
+			string getFichero()const{ //observador del fichero
 
 				return _fichero;
 			}
 
-			bool guardar(list <Contacto> lista){
+			bool guardar(list <Contacto> lista){ //funcion que guarda el fichero
 
 				list <Contacto>::iterator c;
 				list <citas>:: iterator d;
-
-				//lista.sort(funcion_compara_apellidos); //Ordenamos la lista antes de guardarla
 
 				ofstream archivo;
 				archivo.open(getFichero().c_str());
@@ -66,10 +51,13 @@ using namespace std;
 
 						for(d=citas.begin() ; d!=citas.end() ; d++){ //Lista de citas
 
+							
 							archivo << d->fecha << ",";
 							archivo << d->hora << ",";
-							archivo << d->motivo << ",";		
+							archivo << d->motivo << ",";	
 						}
+						
+						
 					}
 					archivo.close(); //cerramos el fichero
 					return true; //Guardado en fichero con exito
@@ -79,7 +67,7 @@ using namespace std;
 			}
 
 
-			list <Contacto> cargar() {
+			list <Contacto> cargar() { //funcion que carga el fichero en una lista auxiliar
 
 				//Variables auxiliares del getline
 				char dni[9], nombre[30], apellidos[60], telefono[12], fechanacimiento[20]; //D.Personales
@@ -98,33 +86,37 @@ using namespace std;
 				if(archivo.is_open()){
 
 
-					while(archivo.getline(dni,200,',')){ //Datos personales
+					while(archivo.getline(dni,200,',')){ //añadimos los datos personales
 
 						archivo.getline(nombre,200,',');
 						archivo.getline(apellidos,200,',');
-						archivo.getline(telefono,200,',');
 						archivo.getline(fechanacimiento,200,',');
+						archivo.getline(telefono,200,',');
 
 						auxContacto.setDni(dni);
 						auxContacto.setNombre(nombre);
 						auxContacto.setApellidos(apellidos);
-						auxContacto.setTelefono(telefono);
 						auxContacto.setFechanacimiento(fechanacimiento);
+						auxContacto.setTelefono(telefono);
 
 
 						auxCitas.clear(); //vaciamos lista de citas
 
-						for(i=0 ; i<3 ; i++){
+						for(i=0 ; i<5 ; i++){ //añadimos los datos de las citas
 
 							archivo.getline(fecha,200,',');
 							archivo.getline(hora,200,',');
 							archivo.getline(motivo,200,',');	
 
+							auxCita.fecha = fecha;
+							auxCita.hora = hora;
+							auxCita.motivo = motivo;
+
 							auxCitas.push_back(auxCita); //Añadimos nuevo elemento de Citas a la lista
+							
 						}
 
 						auxContacto.setCitas(auxCitas); //Añadimos esta lista de citas al contacto
-
 
 						auxContactos.push_back(auxContacto); //añadimos la lista auxiliar ya cargada a nuestra lista 
 
